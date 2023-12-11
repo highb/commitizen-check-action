@@ -18,7 +18,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: pip install -U commitizen==$\{{ inputs.commitizen_version }}
+    - run: pip install -U commitizen==${{ inputs.commitizen_version }}
       shell: bash
     - run: cz check
       shell: bash
