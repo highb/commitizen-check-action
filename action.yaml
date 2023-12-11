@@ -1,0 +1,22 @@
+name: 'Check Commits using Commitizen'
+description: 'Verify that commits match configured commitizen rules'
+branding:
+  icon: 'git-commit'
+  color: 'purple'
+inputs:
+  commitizen_version:
+    description: 'Specify the version to be used by commitizen'
+    required: false
+    default: latest
+  github_token:
+    description: 'Token for the repo. Can be passed in using $\{{ secrets.GITHUB_TOKEN }}'
+    required: false
+  debug:
+    description: "If true, prints debug output to GitHub Actions stdout."
+    required: false
+    default: "false"
+runs:
+  using: "composite"
+  steps:
+    - run: cz check
+      uses: docker://commitizen/cz-cli:${{ inputs.commitizen_version }}
