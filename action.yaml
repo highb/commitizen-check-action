@@ -19,4 +19,5 @@ runs:
   using: "composite"
   steps:
     - run: cz check
+      shell: bash
       uses: docker://commitizen/cz-cli:${{ inputs.commitizen_version }}
