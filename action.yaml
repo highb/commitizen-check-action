@@ -16,7 +16,9 @@ inputs:
     required: false
     default: "false"
 runs:
-  using: "docker"
-  image: commitizen/cz-cli:${{ inputs.commitizen_version }}
-  args:
-    - cz check
+  using: "composite"
+  steps:
+    - run: pip install -U commitizen==$\{{ inputs.commitizen_version }}
+      shell: bash
+    - run: cz check
+      shell: bash
