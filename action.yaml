@@ -18,7 +18,17 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: pip install -U commitizen==${{ inputs.commitizen_version }}
-      shell: bash
-    - run: cz check
-      shell: bash
+    - shell: bash
+      run: |
+        if [[ ${{ inputs.debug }} == "true" ]]; then
+          set -x
+        fi
+        # TODO: This should just use the container image
+        # https://github.com/commitizen-tools/commitizen-docker-image
+        if [[ -n "${{ inputs.commitizen_version }}" ]]; then
+          pip install -U commitizen==${{ inputs.commitizen_version }}
+        else
+          pip install -U commitizen
+        fi
+
+        cz check --rev-range ${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }}
